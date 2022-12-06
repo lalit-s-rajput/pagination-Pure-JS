@@ -23,8 +23,11 @@ document.addEventListener("DOMContentLoaded", () => {
     currentEndPageIndex = noOfPages < 10 ? noOfPages - 1 : itemsToBeShown - 1;
     if (currentEndPageIndex >= noOfPages - 1) {
       currentEndPageIndex = noOfPages - 1;
-      disableFurtherNext = true;
+      disableNextButton(true);// disableFurtherNext = true;
       disableNextRow = true;
+    }
+    if(!startPageIndex){
+      disablePrevButton(true);
     }
     createButtons(startPageIndex,currentEndPageIndex);
   }
@@ -44,13 +47,17 @@ document.addEventListener("DOMContentLoaded", () => {
   nextButton.addEventListener("click", () => {
     console.log("next");
     currentEndPageIndex++;
-    if (currentEndPageIndex >= noOfPages - 1) {
-      currentEndPageIndex = noOfPages - 1;
-      disableFurtherNext = true;
+    startPageIndex = currentEndPageIndex - (noOfItems - 1);
+    if (currentEndPageIndex > noOfPages - 1) {
+      // currentEndPageIndex = noOfPages - 1;
+      disableNextButton(true);// disableFurtherNext = true;
       disableNextRow = true;
+      createButtons(startPageIndex,currentEndPageIndex);
       return;
     }
-    startPageIndex = currentEndPageIndex - (noOfItems - 1);
+    if(startPageIndex){
+      disablePrevButton(false);
+    }
     createButtons(startPageIndex,currentEndPageIndex);
   });
 
@@ -58,10 +65,22 @@ document.addEventListener("DOMContentLoaded", () => {
   prevButton.addEventListener("click", () => {
     console.log("back");
     startPageIndex--;
-    disableFurtherNext = false;
+    disableNextButton(false);
+    if(!startPageIndex){
+      disablePrevButton(true);
+    }
+    // disablePrevButton(true);//disableFurtherNext = false;
     disableNextRow = false;
     currentEndPageIndex = startPageIndex + (noOfItems - 1);
     createButtons(startPageIndex,currentEndPageIndex);
     // noOfPages = new Array(Math.ceil(this._dataLength / this.noOfItems));
   });
+
+  function disableNextButton (flag) {
+    document.querySelector('.next-btn').disabled = flag;
+  }
+
+  function disablePrevButton (flag) {
+    document.querySelector('.prev-btn').disabled = flag;
+  }
 });
