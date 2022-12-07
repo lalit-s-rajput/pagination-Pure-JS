@@ -18,9 +18,7 @@
     <div class="pagination-container">
       <div class="btn-container">
         <button
-          [disabled]="!nextPageCount"
-          (click)="backToPreviousRow()"
-          class="pag-btn"
+          class="pag-btn prev-row-btn"
         >
           <p class="double-arrow-btn">
             <i class="fa fa-chevron-left" aria-hidden="true"></i>
@@ -53,9 +51,7 @@
       </div>
       <div class="btn-container">
         <button
-          [disabled]="disableNextRow"
-          (click)="moveToNextRow()"
-          class="pag-btn nxt-row"
+          class="pag-btn next-row-btn"
         >
           <p class="double-arrow-btn">
             <i class="fa fa-chevron-right" aria-hidden="true"></i>
